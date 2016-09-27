@@ -20,11 +20,13 @@ final int END_STATE = 2;
 int currentState = MENU_STATE;
 Font titleFont;
 Font startAndEndMenu;
-Rocketship rocket;
+Rocketship rocket = new Rocketship(250,700,50,50);
+ObjectManager manager = new ObjectManager();
 public GamePanel() {
 	timer = new Timer(1000/60,this);
 	titleFont = new Font("Arial", Font.PLAIN, 48);
 	startAndEndMenu = new Font("Arial", Font.PLAIN, 25);
+	manager.addObject(rocket);
 }
 @Override
 public void actionPerformed(ActionEvent e) {
@@ -53,14 +55,14 @@ public void updateMenuState() {
 	
 }
 public void updateGameState() {
-	
+	manager.update();
 }
 public void updateEndState() {
 	
 }
 public void drawMenuState(Graphics g) {
 	g.setColor(Color.BLUE);
-	g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 	g.setColor(Color.YELLOW);
 	g.setFont(titleFont);
 	g.drawString("LEAGUE INVADERS", 25,200);
@@ -71,11 +73,12 @@ public void drawMenuState(Graphics g) {
 }
 public void drawGameState(Graphics g) {
 	g.setColor(Color.BLACK);
-	g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+	manager.draw(g);
 }
 public void drawEndState(Graphics g) {
 	g.setColor(Color.RED);
-	g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 	g.setColor(Color.BLACK);
 	g.setFont(titleFont);
 	g.drawString("GAME OVER", 100, 125);
@@ -92,18 +95,49 @@ public void keyTyped(KeyEvent e) {
 }
 @Override
 public void keyPressed(KeyEvent e) {
-	System.out.println("keypressed");
+	
 	if(e.getKeyCode()==KeyEvent.VK_ENTER){
 		currentState++;
 	} 
 	if(currentState > END_STATE){
 		currentState = MENU_STATE;
 	}
+	if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+		System.out.println("keypressed");
+		rocket.left=true;
+	} 
+	if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		System.out.println("keypressed");
+		rocket.right=true;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_UP) {
+		System.out.println("keypressed");
+		rocket.up=true;
+	} 
+	if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+		System.out.println("keypressed");
+		rocket.down=true;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+		manager.addObject(new Projectile(rocket.x+20, rocket.y, 10, 10));
+	}
 }
+
 @Override
 public void keyReleased(KeyEvent e) {
 	System.out.println("keyreleased");
-	
+	if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+		rocket.left=false;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+		rocket.right=false;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_UP) {
+		rocket.up=false;
+	}
+	if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+		rocket.down=false;
+	}
 }
 
 }
