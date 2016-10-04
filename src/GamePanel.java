@@ -56,6 +56,11 @@ public void updateMenuState() {
 }
 public void updateGameState() {
 	manager.update();
+	manager.manageEnemies();
+	manager.checkCollision();
+	if(rocket.isAlive==false) {
+		currentState=END_STATE;
+	}
 }
 public void updateEndState() {
 	
