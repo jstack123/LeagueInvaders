@@ -22,6 +22,7 @@ Font titleFont;
 Font startAndEndMenu;
 Rocketship rocket = new Rocketship(250,700,50,50);
 ObjectManager manager = new ObjectManager();
+String myScore;
 public GamePanel() {
 	timer = new Timer(1000/60,this);
 	titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -60,10 +61,16 @@ public void updateGameState() {
 	manager.checkCollision();
 	if(rocket.isAlive==false) {
 		currentState=END_STATE;
+		manager.getScore();
+		manager.reset();
+		rocket = new Rocketship(250,700,50,50);
+		manager.addObject(rocket);
 	}
+	myScore = "" + manager.getScore();
+
 }
 public void updateEndState() {
-	
+
 }
 public void drawMenuState(Graphics g) {
 	g.setColor(Color.BLUE);
@@ -88,7 +95,7 @@ public void drawEndState(Graphics g) {
 	g.setFont(titleFont);
 	g.drawString("GAME OVER", 100, 125);
 	g.setFont(startAndEndMenu);
-	g.drawString("You killed 0 aliens.", 125, 300);
+	g.drawString("You killed "+ myScore +" aliens.", 125, 300);
 	g.setFont(startAndEndMenu);
 	g.drawString("Press BACKSPACE to Restart", 75, 500);
 }
@@ -103,7 +110,15 @@ public void keyPressed(KeyEvent e) {
 	
 	if(e.getKeyCode()==KeyEvent.VK_ENTER){
 		currentState++;
+		if(currentState == GAME_STATE) {
+			manager.setScore(0);
+		}
+	
 	} 
+	if(e.getKeyCode()==KeyEvent.VK_BACK_SPACE) {
+		currentState = MENU_STATE;
+
+	}
 	if(currentState > END_STATE){
 		currentState = MENU_STATE;
 	}

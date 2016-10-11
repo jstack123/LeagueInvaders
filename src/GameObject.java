@@ -13,7 +13,6 @@ public GameObject() {
 }
 public void update() {
 	collisionBox.setBounds(x, y, width, height);
-	//manager.getScore();
 }
 public void draw(Graphics g) {
 	
