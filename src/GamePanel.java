@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -81,7 +82,7 @@ public void drawMenuState(Graphics g) {
 	g.setColor(Color.YELLOW);
 	g.setFont(startAndEndMenu);
 	g.drawString("Press ENTER to start", 130, 300);
-	g.drawString("Press SPACE for instructions", 100, 400);
+	g.drawString("Press SHIFT for instructions", 100, 400);
 }
 public void drawGameState(Graphics g) {
 	g.setColor(Color.BLACK);
@@ -140,6 +141,9 @@ public void keyPressed(KeyEvent e) {
 	}
 	if(e.getKeyCode()==KeyEvent.VK_SPACE) {
 		manager.addObject(new Projectile(rocket.x+20, rocket.y, 10, 10));
+	}
+	if(e.getKeyCode()==KeyEvent.VK_SHIFT) {
+		JOptionPane.showMessageDialog(null, "Press SPACE to shoot. Use the ARROW KEYS to move. Don't die!");
 	}
 }
 
